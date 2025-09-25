@@ -1,20 +1,38 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
+import {
+  Platform,
+  Text,
+  View,
+} from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-export default function App() {
+const isIOS = Platform.OS == "ios";
+
+const Tab = createBottomTabNavigator();
+
+function HomeScreen() {
   return (
-    <View style={styles.container}>
-      <Text>7O77777pen up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView edges={['top']} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>{isIOS ? "IOS" : "Home"}</Text>
+    </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const App = () => {
+  return (
+    <SafeAreaProvider>
+        <NavigationContainer>
+          <Tab.Navigator screenOptions={{headerShown:true}}>
+            <Tab.Screen name="HOME" component={HomeScreen} />
+            <Tab.Screen name="REORDER" component={HomeScreen} />
+            <Tab.Screen name="CART" component={HomeScreen} />
+            <Tab.Screen name="ACCOUNT" component={HomeScreen} />
+          </Tab.Navigator>
+        </NavigationContainer>
+    </SafeAreaProvider>
+  );
+};
+
+export default App;
