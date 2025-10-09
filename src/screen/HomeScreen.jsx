@@ -1,4 +1,12 @@
-import { Platform, StyleSheet, View } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TextInput,
+} from "react-native";
+
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { Dimensions } from 'react-native';
@@ -10,7 +18,7 @@ const screenH  = Dimensions.get('screen').height; // ความสูงเต
 
 const HomeScreen = () => {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex:1}}>
     <View style={styles.container}>
       <LinearGradient
         // Background Linear Gradient
@@ -18,6 +26,15 @@ const HomeScreen = () => {
         style={styles.background}
       />
       <Header />
+      <Text style={styles.headingText}>Match Your Style</Text>
+      <View style={styles.inputContainer}>
+        <Image
+          source={require("../assets/search.png")}
+          style={styles.searchIcon}
+        />
+        <TextInput placeholder="Search" style={styles.textInput} />
+      </View>
+
     </View>
     </SafeAreaView>
   );
@@ -27,7 +44,7 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+  //  flex: 1,
   // backgroundColor: "white",
    padding: 20,
   },
@@ -48,4 +65,26 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#fff",
   },
+    headingText: {
+    fontSize: 28,
+    color: "#000000",
+    marginVertical: 20,
+  },
+  inputContainer: {
+    width: "100%",
+    backgroundColor: "#FFFFFF",
+    height: 48,
+    borderRadius: 12,
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  searchIcon: {
+    height: 26,
+    width: 26,
+    marginHorizontal: 12,
+  },
+  textInput: {
+    fontSize: 18,
+  },
+
 });
