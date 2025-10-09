@@ -2,19 +2,24 @@ import { Platform, StyleSheet, View } from "react-native";
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { Dimensions } from 'react-native';
+import { SafeAreaView } from "react-native-safe-area-context";
+import Header from "../components/Header";
 
 const windowH = Dimensions.get('window').height; // พื้นที่แอปหลังหัก status bar/nav bar (ส่วนมาก)
 const screenH  = Dimensions.get('screen').height; // ความสูงเต็มหน้าจอ (รวมระบบ)
 
 const HomeScreen = () => {
   return (
+    <SafeAreaView>
     <View style={styles.container}>
       <LinearGradient
         // Background Linear Gradient
         colors={["rgba(0,0,0,0.5)", "transparent"]}
         style={styles.background}
       />
+      <Header />
     </View>
+    </SafeAreaView>
   );
 };
 
@@ -23,10 +28,8 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
-   
+  // backgroundColor: "white",
+   padding: 20,
   },
   background: {
     position: "absolute",

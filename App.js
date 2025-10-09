@@ -20,7 +20,7 @@ const App = () => {
       <NavigationContainer>
         <Tab.Navigator
           screenOptions={{
-            headerShown: true,
+            headerShown: false,
             tabBarShowLabel: false,
             tabBarActiveTintColor: "red",
             size: 51,
