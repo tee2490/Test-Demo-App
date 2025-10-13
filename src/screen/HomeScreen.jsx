@@ -14,11 +14,16 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../components/Header";
 import Category from "../components/Category";
 import ProductCard from "../components/ProductCard";
+import data from "../data/data.json";
+
+
 
 const windowH = Dimensions.get("window").height; // พื้นที่แอปหลังหัก status bar/nav bar (ส่วนมาก)
 const screenH = Dimensions.get("screen").height; // ความสูงเต็มหน้าจอ (รวมระบบ)
 
 const HomeScreen = () => {
+    const [products, setProducts] = useState(data.products);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -44,8 +49,8 @@ const HomeScreen = () => {
               <Category />
             </>
           }
-          data={[1, 2, 3, 4, 5, 6]}
-          renderItem={(item, index) => <ProductCard key={index} item={item} />}
+          data={products}
+          renderItem={({item, index}) => <ProductCard key={index} item={item} />}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 150 }}
         />

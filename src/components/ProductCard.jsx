@@ -3,18 +3,15 @@ import React, { useState } from "react";
 import Feather from "@expo/vector-icons/Feather";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-const ProductCard = () => {
+const ProductCard = ({ item }) => {
   const [isLiked, setIsLiked] = useState(true);
 
   return (
     <View style={styles.container}>
-      <Image
-        source={require("../assets/girl2.png")}
-        style={styles.coverImage}
-      />
+      <Image source={{ uri: item.image }} style={styles.coverImage} />
       <View style={styles.contentContainer}>
-        <Text style={styles.title}>Test</Text>
-        <Text style={styles.price}>$9.99</Text>
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.price}>${item.price}</Text>
       </View>
 
       <TouchableOpacity
