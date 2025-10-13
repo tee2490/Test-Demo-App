@@ -3,11 +3,14 @@ import React, { useState } from "react";
 import Feather from "@expo/vector-icons/Feather";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-const ProductCard = ({ item }) => {
+const ProductCard = ({ item, toggleFavorite, handleProductClick }) => {
   const [isLiked, setIsLiked] = useState(true);
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => handleProductClick(item)}
+    >
       <Image source={{ uri: item.image }} style={styles.coverImage} />
       <View style={styles.contentContainer}>
         <Text style={styles.title}>{item.title}</Text>
@@ -15,16 +18,16 @@ const ProductCard = ({ item }) => {
       </View>
 
       <TouchableOpacity
-        onPress={() => setIsLiked(!isLiked)}
+        onPress={() => toggleFavorite(item)}
         style={styles.likeContainer}
       >
-        {isLiked ? (
-          <Feather name="heart" size={15} color="red" />
-        ) : (
+        {item?.isFavorite ? (
           <FontAwesome name="heart" size={15} color="red" />
+        ) : (
+          <Feather name="heart" size={15} color="red" />
         )}
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 };
 

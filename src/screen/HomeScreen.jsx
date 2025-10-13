@@ -15,47 +15,71 @@ import Header from "../components/Header";
 import Category from "../components/Category";
 import ProductCard from "../components/ProductCard";
 import data from "../data/data.json";
-
-
+import { useNavigation } from "@react-navigation/native";
 
 const windowH = Dimensions.get("window").height; // พื้นที่แอปหลังหัก status bar/nav bar (ส่วนมาก)
 const screenH = Dimensions.get("screen").height; // ความสูงเต็มหน้าจอ (รวมระบบ)
 
 const HomeScreen = () => {
-    const [products, setProducts] = useState(data.products);
+  const [products, setProducts] = useState(data.products);
+  const navigation = useNavigation();
+
+  const handleProductDetails = (item) => {
+    navigation.navigate("PRODUCT_DETAILS", { item });
+  };
+
+  const toggleFavorite = (item) => {
+    const newProduct = products.map((prod) => {
+      if (prod.id === item.id) {
+        console.log("prod: ", prod);
+        return {
+          ...prod,
+          isFavorite: !prod.isFavorite,
+        };
+      }
+      return prod;
+    });
+
+    setProducts(newProduct);
+  };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <LinearGradient
-          // Background Linear Gradient
-          colors={["rgba(0,0,0,0.5)", "transparent"]}
-          style={styles.background}
-        />
-        <Header />
-        <FlatList
-          numColumns={2}
-          ListHeaderComponent={
-            <>
-              <Text style={styles.headingText}>Match Your Style</Text>
-              <View style={styles.inputContainer}>
-                <Image
-                  source={require("../assets/search.png")}
-                  style={styles.searchIcon}
-                />
-                <TextInput placeholder="Search" style={styles.textInput} />
-              </View>
+    <View style={styles.container}>
+      <LinearGradient
+        // Background Linear Gradient
+        colors={["rgba(0,0,0,0.5)", "transparent"]}
+        style={styles.background}
+      />
+      <Header />
+      <FlatList
+        numColumns={2}
+        ListHeaderComponent={
+          <>
+            <Text style={styles.headingText}>Match Your Style</Text>
+            <View style={styles.inputContainer}>
+              <Image
+                source={require("../assets/search.png")}
+                style={styles.searchIcon}
+              />
+              <TextInput placeholder="Search" style={styles.textInput} />
+            </View>
 
-              <Category />
-            </>
-          }
-          data={products}
-          renderItem={({item, index}) => <ProductCard key={index} item={item} />}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 150 }}
-        />
-      </View>
-    </SafeAreaView>
+            <Category />
+          </>
+        }
+        data={products}
+        renderItem={({ item, index }) => (
+          <ProductCard
+            toggleFavorite={toggleFavorite}
+            handleProductClick={handleProductDetails}
+            key={index}
+            item={item}
+          />
+        )}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 150 }}
+      />
+    </View>
   );
 };
 
