@@ -2,6 +2,7 @@ import { Image, StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import Feather from "@expo/vector-icons/Feather";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { fonts } from "../utils/fonts";
 
 const ProductCard = ({ item, toggleFavorite, handleProductClick }) => {
   const [isLiked, setIsLiked] = useState(true);
@@ -45,11 +46,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   title: {
+    fontFamily: fonts.BlackItalic,
     fontSize: 18,
     fontWeight: "700",
     color: "#444444",
   },
   price: {
+    fontFamily: fonts.BlackItalic,
     fontSize: 18,
   },
   contentContainer: {

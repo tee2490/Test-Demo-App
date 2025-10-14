@@ -14,6 +14,7 @@ import CartScreen from "./src/screen/CartScreen";
 import { CartContext, CartProvider } from "./src/Context/CartContext";
 import { StyleSheet, Text, View } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { useFonts } from "expo-font";
 
 const size = 24;
 
@@ -36,6 +37,17 @@ const MyHomeStack = () => {
 };
 
 const App = () => {
+    const [fontsLoaded, fontError] = useFonts({
+    "Poppins-Regular": require("./src/assets/fonts/Poppins-Regular.ttf"),
+    "Poppins-Medium": require("./src/assets/fonts/Poppins-Medium.ttf"),
+    "Poppins-Bold": require("./src/assets/fonts/Poppins-Bold.ttf"),
+    "Poppins-BlackItalic.ttf": require("./src/assets/fonts/Poppins-BlackItalic.ttf"),
+  });
+
+  if (!fontsLoaded && !fontError) {
+    return <Text>Font loading...</Text>;
+  }
+
   return (
     <SafeAreaProvider>
       <NavigationContainer>
