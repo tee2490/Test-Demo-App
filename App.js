@@ -1,3 +1,5 @@
+import "react-native-gesture-handler";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { StatusBar } from "expo-status-bar";
 import React, { useContext } from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -20,6 +22,7 @@ const size = 24;
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
 const MyHomeStack = () => {
   return (
@@ -36,8 +39,89 @@ const MyHomeStack = () => {
   );
 };
 
+const TabsNavigator = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: "red",
+      }}
+    >
+      <Tab.Screen
+        name="HOME"
+        component={MyHomeStack}
+        initialParams={{ screen: "HomeScreen" }}
+        options={{
+          tabBarIcon: ({ focused, color }) => {
+            return <Entypo name={"home"} size={size} color={color} />;
+          },
+        }}
+      />
+      <Tab.Screen
+        name="REORDER"
+        component={HomeScreen}
+        options={{
+          tabBarIcon: ({ focused, color }) => {
+            return <Ionicons name="reorder-four" size={size} color={color} />;
+          },
+        }}
+      />
+      <Tab.Screen
+        name="CART"
+        component={MyHomeStack}
+        initialParams={{ screen: "CartScreen" }}
+        options={{
+          tabBarIcon: ({ size, color }) => {
+            const { cartItems } = useContext(CartContext);
+
+            return (
+              <View>
+                <MaterialIcons
+                  name={"shopping-cart"}
+                  size={size}
+                  color={color}
+                />
+                <View style={styles.badge}>
+                  <Text style={{ color: "white", fontSize: 10 }}>
+                    {cartItems?.length}
+                  </Text>
+                </View>
+              </View>
+            );
+          },
+        }}
+      />
+
+      <Tab.Screen
+        name="ACCOUNT"
+        component={HomeScreen}
+        options={{
+          tabBarIcon: ({ focused, color }) => {
+            return (
+              <MaterialCommunityIcons
+                name="account"
+                size={size}
+                color={color}
+              />
+            );
+          },
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
+
+function NotificationsScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Button onPress={() => navigation.goBack()} title="Go back home" />
+    </View>
+  );
+}
+
 const App = () => {
-    const [fontsLoaded, fontError] = useFonts({
+  const [fontsLoaded, fontError] = useFonts({
     "Poppins-Regular": require("./src/assets/fonts/Poppins-Regular.ttf"),
     "Poppins-Medium": require("./src/assets/fonts/Poppins-Medium.ttf"),
     "Poppins-Bold": require("./src/assets/fonts/Poppins-Bold.ttf"),
@@ -51,81 +135,12 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <SafeAreaView style={{ flex: 1 }}>
-          <CartProvider>
-            <Tab.Navigator
-              screenOptions={{
-                headerShown: false,
-                tabBarShowLabel: false,
-                tabBarActiveTintColor: "red",
-                size: 51,
-              }}
-            >
-              <Tab.Screen
-                name="HOME"
-                component={MyHomeStack}
-                initialParams={{ screen: "HomeScreen" }}
-                options={{
-                  tabBarIcon: ({ focused, color }) => {
-                    return <Entypo name={"home"} size={size} color={color} />;
-                  },
-                }}
-              />
-              <Tab.Screen
-                name="REORDER"
-                component={HomeScreen}
-                options={{
-                  tabBarIcon: ({ focused, color }) => {
-                    return (
-                      <Ionicons name="reorder-four" size={size} color={color} />
-                    );
-                  },
-                }}
-              />
-              <Tab.Screen
-                name="CART"
-                component={MyHomeStack}
-                initialParams={{ screen: "CartScreen" }}
-                options={{
-                  tabBarIcon: ({ size, color }) => {
-                    const { cartItems } = useContext(CartContext);
-
-                    return (
-                      <View>
-                        <MaterialIcons
-                          name={"shopping-cart"}
-                          size={size}
-                          color={color}
-                        />
-                        <View style={styles.badge}>
-                          <Text style={{ color: "white", fontSize: 10 }}>
-                            {cartItems?.length}
-                          </Text>
-                        </View>
-                      </View>
-                    );
-                  },
-                }}
-              />
-
-              <Tab.Screen
-                name="ACCOUNT"
-                component={HomeScreen}
-                options={{
-                  tabBarIcon: ({ focused, color }) => {
-                    return (
-                      <MaterialCommunityIcons
-                        name="account"
-                        size={size}
-                        color={color}
-                      />
-                    );
-                  },
-                }}
-              />
-            </Tab.Navigator>
-          </CartProvider>
-        </SafeAreaView>
+        <CartProvider>
+          <Drawer.Navigator>
+            <Drawer.Screen name="Home" component={TabsNavigator} />
+            <Drawer.Screen name="About" component={NotificationsScreen} />
+          </Drawer.Navigator>
+        </CartProvider>
       </NavigationContainer>
     </SafeAreaProvider>
   );
