@@ -13,7 +13,7 @@ import CartProduct from "../components/CartProduct";
 import { CartContext } from "../Context/CartContext";
 
 const CartScreen = () => {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems,totalPrice } = useContext(CartContext);
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -33,17 +33,17 @@ const CartScreen = () => {
             <View style={styles.bottomContentContainer}>
               <View style={styles.flexRowContainer}>
                 <Text style={styles.titleText}>Total:</Text>
-                <Text style={styles.priceText}>$1000.00</Text>
+                <Text style={styles.priceText}>${totalPrice}</Text>
               </View>
               <View style={styles.flexRowContainer}>
                 <Text style={styles.titleText}>Shpping:</Text>
-                <Text style={styles.priceText}>$50.0</Text>
+                <Text style={styles.priceText}>$0.0</Text>
               </View>
               <View style={styles.divider} />
               <View style={styles.flexRowContainer}>
                 <Text style={styles.titleText}>Grand Total:</Text>
                 <Text style={[styles.priceText, styles.grandPriceText]}>
-                  $1050.00
+                  ${totalPrice}
                 </Text>
               </View>
             </View>
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-   // marginTop: Platform.OS == "android" ? 25 : 0,
+  //  marginTop: Platform.OS == "android" ? 25 : 0,
     padding: 10,
   },
   background: {
