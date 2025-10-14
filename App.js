@@ -10,6 +10,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProductDetailsScreen from "./src/screen/ProductDetailsScreen";
+import CartScreen from "./src/screen/CartScreen";
 
 const isIOS = Platform.OS == "ios";
 const size = 24;
@@ -19,7 +20,6 @@ const Stack = createNativeStackNavigator();
 
 const MyHomeStack = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
@@ -29,7 +29,6 @@ const MyHomeStack = () => {
       <Stack.Screen name="HOME" component={HomeScreen} />
       <Stack.Screen name="PRODUCT_DETAILS" component={ProductDetailsScreen} />
     </Stack.Navigator>
-    </SafeAreaView>
   );
 };
 
@@ -37,61 +36,63 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Tab.Navigator
-          screenOptions={{
-            headerShown: false,
-            tabBarShowLabel: false,
-            tabBarActiveTintColor: "red",
-            size: 51,
-          }}
-        >
-          <Tab.Screen
-            name="HOME_STACK"
-            component={MyHomeStack}
-            options={{
-              tabBarIcon: ({ focused, color }) => {
-                return <Entypo name={"home"} size={size} color={color} />;
-              },
+        <SafeAreaView style={{ flex: 1 }}>
+          <Tab.Navigator
+            screenOptions={{
+              headerShown: false,
+              tabBarShowLabel: false,
+              tabBarActiveTintColor: "red",
+              size: 51,
             }}
-          />
-          <Tab.Screen
-            name="REORDER"
-            component={HomeScreen}
-            options={{
-              tabBarIcon: ({ focused, color }) => {
-                return (
-                  <Ionicons name="reorder-four" size={size} color={color} />
-                );
-              },
-            }}
-          />
-          <Tab.Screen
-            name="CART"
-            component={HomeScreen}
-            options={{
-              tabBarIcon: ({ focused, color }) => {
-                return (
-                  <AntDesign name="shopping-cart" size={size} color={color} />
-                );
-              },
-            }}
-          />
-          <Tab.Screen
-            name="ACCOUNT"
-            component={HomeScreen}
-            options={{
-              tabBarIcon: ({ focused, color }) => {
-                return (
-                  <MaterialCommunityIcons
-                    name="account"
-                    size={size}
-                    color={color}
-                  />
-                );
-              },
-            }}
-          />
-        </Tab.Navigator>
+          >
+            <Tab.Screen
+              name="HOME_STACK"
+              component={MyHomeStack}
+              options={{
+                tabBarIcon: ({ focused, color }) => {
+                  return <Entypo name={"home"} size={size} color={color} />;
+                },
+              }}
+            />
+            <Tab.Screen
+              name="REORDER"
+              component={HomeScreen}
+              options={{
+                tabBarIcon: ({ focused, color }) => {
+                  return (
+                    <Ionicons name="reorder-four" size={size} color={color} />
+                  );
+                },
+              }}
+            />
+            <Tab.Screen
+              name="CART"
+              component={CartScreen}
+              options={{
+                tabBarIcon: ({ focused, color }) => {
+                  return (
+                    <AntDesign name="shopping-cart" size={size} color={color} />
+                  );
+                },
+              }}
+            />
+            <Tab.Screen
+              name="ACCOUNT"
+              component={HomeScreen}
+              options={{
+                tabBarIcon: ({ focused, color }) => {
+                  return (
+                    <MaterialCommunityIcons
+                      name="account"
+                      size={size}
+                      color={color}
+                    />
+                  );
+                },
+              }}
+            />
+          </Tab.Navigator>
+        </SafeAreaView>
       </NavigationContainer>
     </SafeAreaProvider>
   );
