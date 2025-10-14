@@ -17,6 +17,7 @@ import { CartContext, CartProvider } from "./src/Context/CartContext";
 import { StyleSheet, Text, View } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useFonts } from "expo-font";
+import AccountScreen from "./src/screen/AccountScreen";
 
 const size = 24;
 
@@ -35,6 +36,7 @@ const MyHomeStack = () => {
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="PRODUCT_DETAILS" component={ProductDetailsScreen} />
       <Stack.Screen name="CartScreen" component={CartScreen} />
+      <Stack.Screen name="AccountScreen" component={AccountScreen} />
     </Stack.Navigator>
   );
 };
@@ -94,8 +96,9 @@ const TabsNavigator = () => {
       />
 
       <Tab.Screen
+        initialParams={{ screen: "AccountScreen" }}
         name="ACCOUNT"
-        component={HomeScreen}
+        component={AccountScreen}
         options={{
           tabBarIcon: ({ focused, color }) => {
             return (
