@@ -6,7 +6,7 @@ const Header = ({ isCart }) => {
   const navigation = useNavigation();
 
   const handleBack = () => {
-    navigation.navigate("HOME_STACK");
+   navigation.navigate("HomeScreen");
   };
 
   return (
